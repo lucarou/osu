@@ -41,6 +41,7 @@ namespace osu.Game.Screens.Select
         }
 
         private readonly OsuTabControlCheckbox modsCheckbox;
+        private readonly OsuTabControlCheckbox friendsCheckbox;
         private readonly OsuTabControl<BeatmapDetailAreaTabItem> tabs;
         private readonly Container tabsContainer;
 
@@ -76,16 +77,26 @@ namespace osu.Game.Screens.Select
                     Text = @"Selected Mods",
                     Alpha = 0,
                 },
+                friendsCheckbox = new OsuTabControlCheckbox
+                {
+                    Anchor = Anchor.BottomCentre,
+                    Origin = Anchor.BottomCentre,
+                    Text = @"Show friend's scores",
+                    Alpha = 0,
+                },
             };
 
             tabs.Current.ValueChanged += _ => invokeOnFilter();
             modsCheckbox.Current.ValueChanged += _ => invokeOnFilter();
+            friendsCheckbox.Current.ValueChanged += _ => invokeOnFilter();
+
         }
 
         [BackgroundDependencyLoader]
         private void load(OsuColour colour, OsuConfigManager config)
         {
             modsCheckbox.AccentColour = tabs.AccentColour = colour.YellowLight;
+            friendsCheckbox.AccentColour = tabs.AccentColour = colour.YellowLight;
         }
 
         private void invokeOnFilter()
@@ -95,11 +106,13 @@ namespace osu.Game.Screens.Select
             if (tabs.Current.Value.FilterableByMods)
             {
                 modsCheckbox.FadeTo(1, 200, Easing.OutQuint);
+                friendsCheckbox.FadeTo(1, 200, Easing.OutQuint);
                 tabsContainer.Padding = new MarginPadding { Right = 100 };
             }
             else
             {
                 modsCheckbox.FadeTo(0, 200, Easing.OutQuint);
+                friendsCheckbox.FadeTo(0, 200, Easing.OutQuint);
                 tabsContainer.Padding = new MarginPadding();
             }
         }
