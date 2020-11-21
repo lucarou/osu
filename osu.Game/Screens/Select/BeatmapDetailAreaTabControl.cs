@@ -80,8 +80,8 @@ namespace osu.Game.Screens.Select
                 friendsCheckbox = new OsuTabControlCheckbox
                 {
                     Anchor = Anchor.BottomCentre,
-                    Origin = Anchor.BottomCentre,
-                    Text = @"Show friend's scores",
+                    Origin = Anchor.BottomLeft,
+                    Text = @"Show scores of friends",
                     Alpha = 0,
                 },
             };
