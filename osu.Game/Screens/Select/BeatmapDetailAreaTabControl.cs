@@ -81,7 +81,7 @@ namespace osu.Game.Screens.Select
                 {
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomLeft,
-                    Text = @"Show scores of friends",
+                    Text = @"Show local scores",
                     Alpha = 0,
                 },
             };
