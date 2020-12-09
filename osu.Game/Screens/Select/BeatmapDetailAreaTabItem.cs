@@ -17,6 +17,11 @@ namespace osu.Game.Screens.Select
         /// </summary>
         public virtual bool FilterableByMods => false;
 
+        /*/// <summary>
+        /// Whether the contents of this tab can be filtered by the user's local scores.
+        /// </summary>
+        public virtual bool FilterableByLocalScores => false;*/
+
         public override string ToString() => Name;
 
         public bool Equals(BeatmapDetailAreaTabItem other)

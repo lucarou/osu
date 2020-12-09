@@ -32,6 +32,8 @@ namespace osu.Game.Screens.Select
 
         protected Bindable<bool> CurrentModsFilter => tabControl.CurrentModsFilter;
 
+        //protected Bindable<bool> CurrentLocalScoresFilter => tabControl.CurrentLocalScoresFilter;
+
         private readonly Container content;
         protected override Container<Drawable> Content => content;
 
@@ -57,6 +59,7 @@ namespace osu.Game.Screens.Select
                     RelativeSizeAxes = Axes.X,
                     TabItems = CreateTabItems(),
                     OnFilter = OnTabChanged,
+                    //OnLocalScores = OnTabChanged,
                 },
             });
         }

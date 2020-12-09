@@ -32,7 +32,16 @@ namespace osu.Game.Screens.Select
             set => modsCheckbox.Current = value;
         }
 
+        /*public Bindable<bool> CurrentLocalScoresFilter
+        {
+            get => LocalScoresCheckBox.Current;
+            set => LocalScoresCheckBox.Current = value;
+        }
+        */
+
         public Action<BeatmapDetailAreaTabItem, bool> OnFilter; // passed the selected tab and if mods is checked
+
+        public Action<BeatmapDetailAreaTabItem, bool> OnLocalScores; // passed the selected tab and if local scores is checked
 
         public IReadOnlyList<BeatmapDetailAreaTabItem> TabItems
         {
@@ -41,7 +50,7 @@ namespace osu.Game.Screens.Select
         }
 
         private readonly OsuTabControlCheckbox modsCheckbox;
-        private readonly OsuTabControlCheckbox friendsCheckbox;
+        private readonly OsuTabControlCheckbox LocalScoresCheckBox;
         private readonly OsuTabControl<BeatmapDetailAreaTabItem> tabs;
         private readonly Container tabsContainer;
 
@@ -77,7 +86,7 @@ namespace osu.Game.Screens.Select
                     Text = @"Selected Mods",
                     Alpha = 0,
                 },
-                friendsCheckbox = new OsuTabControlCheckbox
+                LocalScoresCheckBox = new OsuTabControlCheckbox
                 {
                     Anchor = Anchor.BottomCentre,
                     Origin = Anchor.BottomLeft,
@@ -88,7 +97,7 @@ namespace osu.Game.Screens.Select
 
             tabs.Current.ValueChanged += _ => invokeOnFilter();
             modsCheckbox.Current.ValueChanged += _ => invokeOnFilter();
-            friendsCheckbox.Current.ValueChanged += _ => invokeOnFilter();
+            LocalScoresCheckBox.Current.ValueChanged += _ => invokeOnFilter();
 
         }
 
@@ -96,23 +105,30 @@ namespace osu.Game.Screens.Select
         private void load(OsuColour colour, OsuConfigManager config)
         {
             modsCheckbox.AccentColour = tabs.AccentColour = colour.YellowLight;
-            friendsCheckbox.AccentColour = tabs.AccentColour = colour.YellowLight;
+            LocalScoresCheckBox.AccentColour = tabs.AccentColour = colour.YellowLight;
         }
 
         private void invokeOnFilter()
         {
             OnFilter?.Invoke(tabs.Current.Value, modsCheckbox.Current.Value);
+            //OnLocalScores?.Invoke(tabs.Current.Value, LocalScoresCheckBox.Current.Value);
 
             if (tabs.Current.Value.FilterableByMods)
             {
                 modsCheckbox.FadeTo(1, 200, Easing.OutQuint);
-                friendsCheckbox.FadeTo(1, 200, Easing.OutQuint);
+                LocalScoresCheckBox.FadeTo(1, 200, Easing.OutQuint);
                 tabsContainer.Padding = new MarginPadding { Right = 100 };
             }
+            /*else if (tabs.Current.Value.FilterableByLocalScores)
+            {
+                modsCheckbox.FadeTo(0, 200, Easing.OutQuint);
+                LocalScoresCheckBox.FadeTo(1, 200, Easing.OutQuint);
+                tabsContainer.Padding = new MarginPadding { Right = 100 };
+            }*/
             else
             {
                 modsCheckbox.FadeTo(0, 200, Easing.OutQuint);
-                friendsCheckbox.FadeTo(0, 200, Easing.OutQuint);
+                LocalScoresCheckBox.FadeTo(0, 200, Easing.OutQuint);
                 tabsContainer.Padding = new MarginPadding();
             }
         }

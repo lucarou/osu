@@ -42,6 +42,8 @@ namespace osu.Game.Screens.Select.Leaderboards
 
         private bool filterMods;
 
+        //private bool filterLocalScores;
+
         private IBindable<WeakReference<ScoreInfo>> itemRemoved;
 
         /// <summary>
@@ -60,7 +62,22 @@ namespace osu.Game.Screens.Select.Leaderboards
                 UpdateScores();
             }
         }
+        /*/// <summary>
+        /// Whether to apply the user local scores as a filter when retrieving scores.
+        /// </summary>
+        public bool FilterLocalScores
+        {
+            get => filterLocalScores;
+            set
+            {
+                if (value == filterLocalScores)
+                    return;
 
+                filterLocalScores = value;
+
+                UpdateScores();
+            }
+        }*/
         [Resolved]
         private ScoreManager scoreManager { get; set; }
 
@@ -81,6 +98,8 @@ namespace osu.Game.Screens.Select.Leaderboards
             {
                 if (filterMods)
                     UpdateScores();
+                /*if (filterLocalScores)
+                    UpdateScores();*/
             };
 
             itemRemoved = scoreManager.ItemRemoved.GetBoundCopy();
