@@ -92,7 +92,21 @@ namespace osu.Game.Screens.Multi.Components
                     break;
             }
         }
+        protected override void OnTabChangedLocalScores(BeatmapDetailAreaTabItem tab, bool selectedLocalScores)
+        {
+            base.OnTabChangedLocalScores(tab, selectedLocalScores);
 
+            switch (tab)
+            {
+                case BeatmapDetailAreaPlaylistTabItem _:
+                    playlistArea.Show();
+                    break;
+
+                default:
+                    playlistArea.Hide();
+                    break;
+            }
+        }
         protected override BeatmapDetailAreaTabItem[] CreateTabItems() => base.CreateTabItems().Prepend(new BeatmapDetailAreaPlaylistTabItem()).ToArray();
     }
 }

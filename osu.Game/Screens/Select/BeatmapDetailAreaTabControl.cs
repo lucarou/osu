@@ -32,12 +32,12 @@ namespace osu.Game.Screens.Select
             set => modsCheckbox.Current = value;
         }
 
-        /*public Bindable<bool> CurrentLocalScoresFilter
+        public Bindable<bool> CurrentLocalScoresFilter
         {
             get => LocalScoresCheckBox.Current;
             set => LocalScoresCheckBox.Current = value;
         }
-        */
+        
 
         public Action<BeatmapDetailAreaTabItem, bool> OnFilter; // passed the selected tab and if mods is checked
 
@@ -111,7 +111,7 @@ namespace osu.Game.Screens.Select
         private void invokeOnFilter()
         {
             OnFilter?.Invoke(tabs.Current.Value, modsCheckbox.Current.Value);
-            //OnLocalScores?.Invoke(tabs.Current.Value, LocalScoresCheckBox.Current.Value);
+            OnLocalScores?.Invoke(tabs.Current.Value, LocalScoresCheckBox.Current.Value);
 
             if (tabs.Current.Value.FilterableByMods)
             {
@@ -119,12 +119,12 @@ namespace osu.Game.Screens.Select
                 LocalScoresCheckBox.FadeTo(1, 200, Easing.OutQuint);
                 tabsContainer.Padding = new MarginPadding { Right = 100 };
             }
-            /*else if (tabs.Current.Value.FilterableByLocalScores)
+            else if (tabs.Current.Value.FilterableByLocalScores)
             {
                 modsCheckbox.FadeTo(0, 200, Easing.OutQuint);
                 LocalScoresCheckBox.FadeTo(1, 200, Easing.OutQuint);
                 tabsContainer.Padding = new MarginPadding { Right = 100 };
-            }*/
+            }
             else
             {
                 modsCheckbox.FadeTo(0, 200, Easing.OutQuint);

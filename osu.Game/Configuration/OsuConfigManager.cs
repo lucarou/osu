@@ -29,6 +29,7 @@ namespace osu.Game.Configuration
 
             Set(OsuSetting.BeatmapDetailTab, PlayBeatmapDetailArea.TabType.Details);
             Set(OsuSetting.BeatmapDetailModsFilter, false);
+            Set(OsuSetting.BeatmapDetailLocalScoresFilter, false);
 
             Set(OsuSetting.ShowConvertedBeatmaps, true);
             Set(OsuSetting.DisplayStarsMinimum, 0.0, 0, 10, 0.1);
@@ -267,5 +268,6 @@ namespace osu.Game.Configuration
         SeasonalBackgroundMode,
         EditorWaveformOpacity,
         AutomaticallyDownloadWhenSpectating,
+        BeatmapDetailLocalScoresFilter,
     }
 }

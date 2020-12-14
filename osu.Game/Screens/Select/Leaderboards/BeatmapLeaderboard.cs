@@ -42,7 +42,7 @@ namespace osu.Game.Screens.Select.Leaderboards
 
         private bool filterMods;
 
-        //private bool filterLocalScores;
+        private bool filterLocalScores;
 
         private IBindable<WeakReference<ScoreInfo>> itemRemoved;
 
@@ -62,7 +62,7 @@ namespace osu.Game.Screens.Select.Leaderboards
                 UpdateScores();
             }
         }
-        /*/// <summary>
+        /// <summary>
         /// Whether to apply the user local scores as a filter when retrieving scores.
         /// </summary>
         public bool FilterLocalScores
@@ -77,7 +77,7 @@ namespace osu.Game.Screens.Select.Leaderboards
 
                 UpdateScores();
             }
-        }*/
+        }
         [Resolved]
         private ScoreManager scoreManager { get; set; }
 
@@ -98,8 +98,8 @@ namespace osu.Game.Screens.Select.Leaderboards
             {
                 if (filterMods)
                     UpdateScores();
-                /*if (filterLocalScores)
-                    UpdateScores();*/
+                if (filterLocalScores)
+                    UpdateScores();
             };
 
             itemRemoved = scoreManager.ItemRemoved.GetBoundCopy();
@@ -173,7 +173,13 @@ namespace osu.Game.Screens.Select.Leaderboards
                 requestMods = new Mod[] { new ModNoMod() };
             else if (filterMods)
                 requestMods = mods.Value;
-
+            else if (filterLocalScores && (Scope == BeatmapLeaderboardScope.Global)){
+                var scores = scoreManager
+                    .QueryScores(s => !s.DeletePending && s.Beatmap.ID == Beatmap.ID && s.Ruleset.ID == ruleset.Value.ID);
+                Scores = scores.OrderByDescending(s => s.TotalScore).ToArray();
+                PlaceholderState = Scores.Any() ? PlaceholderState.Successful : PlaceholderState.NoScores;
+                return null;
+            }
             var req = new GetScoresRequest(Beatmap, ruleset.Value ?? Beatmap.Ruleset, Scope, requestMods);
 
             req.Success += r =>
@@ -181,7 +187,6 @@ namespace osu.Game.Screens.Select.Leaderboards
                 scoresCallback?.Invoke(r.Scores.Select(s => s.CreateScoreInfo(rulesets)));
                 TopScore = r.UserScore?.CreateScoreInfo(rulesets);
             };
-
             return req;
         }
 

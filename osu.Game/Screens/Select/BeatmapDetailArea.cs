@@ -32,7 +32,7 @@ namespace osu.Game.Screens.Select
 
         protected Bindable<bool> CurrentModsFilter => tabControl.CurrentModsFilter;
 
-        //protected Bindable<bool> CurrentLocalScoresFilter => tabControl.CurrentLocalScoresFilter;
+        protected Bindable<bool> CurrentLocalScoresFilter => tabControl.CurrentLocalScoresFilter;
 
         private readonly Container content;
         protected override Container<Drawable> Content => content;
@@ -59,7 +59,7 @@ namespace osu.Game.Screens.Select
                     RelativeSizeAxes = Axes.X,
                     TabItems = CreateTabItems(),
                     OnFilter = OnTabChanged,
-                    //OnLocalScores = OnTabChanged,
+                    OnLocalScores = OnTabChangedLocalScores,
                 },
             });
         }
@@ -84,6 +84,19 @@ namespace osu.Game.Screens.Select
         /// <param name="tab">The tab that was selected.</param>
         /// <param name="selectedMods">Whether the currently-selected mods should be considered.</param>
         protected virtual void OnTabChanged(BeatmapDetailAreaTabItem tab, bool selectedMods)
+        {
+            switch (tab)
+            {
+                case BeatmapDetailAreaDetailTabItem _:
+                    Details.Show();
+                    break;
+
+                default:
+                    Details.Hide();
+                    break;
+            }
+        }
+        protected virtual void OnTabChangedLocalScores(BeatmapDetailAreaTabItem tab, bool selectedLocalScores)
         {
             switch (tab)
             {
